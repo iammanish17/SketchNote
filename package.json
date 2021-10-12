@@ -1,0 +1,23 @@
+{
+  "name": "noted",
+  "version": "1.0.0",
+  "description": "take notes",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iammanish17/noted.git"
+  },
+  "author": "Manish Kundu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iammanish17/noted/issues"
+  },
+  "homepage": "https://github.com/iammanish17/noted#readme",
+  "dependencies": {
+    "electron": "^15.1.2"
+  }
+}
