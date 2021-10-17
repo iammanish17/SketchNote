@@ -1,17 +1,14 @@
 var Store = require('electron-store');
 var db = new Store();
 var fs = require('fs');
-var canvas = document.getElementById("myCanvas");
+var drawingSection = document.getElementById("drawingSection");
+var canvas = document.getElementById("drawingCanvas");
+var ctx = canvas.getContext('2d');
+ctx.strokeStyle = "red";
+ctx.strokeRect(100, 100, 200, 500);
 var newNoteButton = document.getElementById("create-note-button");
 
 window.onload = async () => {
-    //const url = canvas.toDataURL('image/jpg', 1);
-
-    // remove Base64 stuff from the Image
-    //const base64Data = url.replace(/^data:image\/png;base64,/, "");
-    //fs.writeFile("./media/111.png", base64Data, 'base64', function (err) {
-    //    console.log(err);
-    //});
   };
 
   newNoteButton.onclick = () => {
@@ -20,4 +17,11 @@ window.onload = async () => {
           title: "new note",
           value: ""
       });
+      drawingSection.style.display = "block";
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const url = canvas.toDataURL('image/jpg', 1);
+      const base64Data = url.replace(/^data:image\/png;base64,/, "");
+      fs.writeFile('./media/'+noteID+'.png', base64Data, 'base64', function (err) {
+        console.log(err);
+    });
   }

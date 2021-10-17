@@ -8,7 +8,8 @@ function createWindow() {
             nodeIntegration: true,
             contextIsolation: false
         },
-        autoHideMenuBar: true
+        autoHideMenuBar: true,
+        resizable: false
     })
     win.loadFile(__dirname + '/renderer/index.html')
 

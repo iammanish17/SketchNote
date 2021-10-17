@@ -13,9 +13,11 @@
   <body>
     <h1>Hello, world!</h1>
 
-  <div class="display-row">
+  <div class="display-row" style="display: flex;">
 
-  <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 40%;">
+  <div class="left-column" style="padding: 5px; flex: 40%">
+
+  <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
     <a class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
       <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
       <span class="fs-5 fw-semibold">Your Notes</span>
@@ -44,11 +46,17 @@
 
     </div>
   </div>
+  </div>
 
-  <div class="test" style="width: 58%;">
-    <canvas id = "myCanvas"></canvas>
+  <div class="right-column" style="padding: 10px; flex: 58%;">
+
+  <div class="test">
+    <div id="drawingSection">
+    <canvas id = "drawingCanvas" height="520" width="440" style="border:1px solid black;">hello</canvas>
+    </div>
     </div>
 
+  </div>
   </div>
 
   <script src="./script.js"></script>
