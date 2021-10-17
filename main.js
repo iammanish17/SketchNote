@@ -1,9 +1,7 @@
 const {app, BrowserWindow} = require('electron')
 
-let win;
-
 function createWindow() {
-    win = new BrowserWindow({
+    var win = new BrowserWindow({
         width: 800,
         height: 600,
         webPreferences: {
@@ -12,7 +10,6 @@ function createWindow() {
         },
         autoHideMenuBar: true
     })
-
     win.loadFile(__dirname + '/renderer/index.html')
 
     win.addListener('ready-to-show', () => {
@@ -20,9 +17,15 @@ function createWindow() {
     })
 }
 
-app.whenReady().then(
-    () => {  createWindow()}
-    )
+app.whenReady().then(() => {  
+    createWindow()
+    app.on('activate', () => {    
+        if (BrowserWindow.getAllWindows().length === 0) 
+        {      
+            createWindow()    
+        }  
+    })
+})
 
 app.addListener('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
