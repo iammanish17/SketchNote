@@ -19,6 +19,7 @@
   "homepage": "https://github.com/iammanish17/noted#readme",
   "dependencies": {
     "electron": "^15.1.2",
-    "electron-store": "^8.0.1"
+    "electron-store": "^8.0.1",
+    "quill": "^1.3.6"
   }
 }
