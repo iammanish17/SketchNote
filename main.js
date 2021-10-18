@@ -9,7 +9,7 @@ function createWindow() {
             contextIsolation: false
         },
         autoHideMenuBar: true,
-        resizable: false
+        resizable: true
     })
     win.loadFile(__dirname + '/renderer/index.html')
 

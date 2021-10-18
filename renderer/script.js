@@ -6,38 +6,17 @@ var canvas = document.getElementById("drawingCanvas");
 var ctx = canvas.getContext('2d');
 var newNoteButton = document.getElementById("create-note-button");
 
-var Delta = Quill.import('delta');
 var quill = new Quill('#editor', {
   modules: {
     toolbar: [
       [{ header: [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline'],
-      ['code-block']
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block']
     ]
   },
   placeholder: 'Write something here...',
   theme: 'snow'
 });
-const BlockPrototype = Quill.import("blots/block");
-
-class CustomBlock extends BlockPrototype {
-  constructor(domNode, value) {
-    super(domNode, value);
-    this.format("size", "18px");
-  }
-
-  static tagName = "P";
-
-  format(name, value) {
-    if (name === "size") {
-      this.domNode.style.fontSize = value;
-    } else {
-      super.format(name, value);
-    }
-  }
-}
-
-Quill.register(CustomBlock, true);
 
 window.onload = async () => {
   };
