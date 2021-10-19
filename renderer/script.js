@@ -2,9 +2,8 @@ var Store = require('electron-store');
 var db = new Store();
 var fs = require('fs');
 var drawingSection = document.getElementById("drawingSection");
-var canvas = document.getElementById("drawingCanvas");
-var ctx = canvas.getContext('2d');
 var newNoteButton = document.getElementById("create-note-button");
+
 
 var quill = new Quill('#editor', {
   modules: {
@@ -19,6 +18,15 @@ var quill = new Quill('#editor', {
 });
 
 window.onload = async () => {
+  var customBoard2 = new DrawingBoard.Board('drawingCanvas', {
+    controls: [
+      'Color',
+      { Size: { type: 'dropdown' } },
+      { DrawingMode: { filler: false } },
+      'Navigation'
+    ],
+    size: 1
+  });
   };
 
   newNoteButton.onclick = () => {
