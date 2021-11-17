@@ -3,6 +3,9 @@ var db = new Store();
 var fs = require('fs');
 var drawingSection = document.getElementById("drawingSection");
 var newNoteButton = document.getElementById("create-note-button");
+var modeToggleButton = document.getElementById("mode-toggle-button");
+var quillEditor = document.getElementById("quill-editor");
+var drawingCanvas = document.getElementById("drawingCanvas");
 
 
 var quill = new Quill('#editor', {
@@ -45,3 +48,19 @@ window.onload = async () => {
         console.log(err);
     });
   }
+
+  modeToggleButton.onclick = () => {
+      if (modeToggleButton.innerText === "Editor Mode")
+      {
+        modeToggleButton.innerText = "Canvas Mode";
+        quillEditor.style.display = "none";
+        drawingCanvas.style.display = "block";
+      }
+      else
+      {
+        modeToggleButton.innerText = "Editor Mode";
+        drawingCanvas.style.display = "none";
+        quillEditor.style.display = "block";
+      }
+  
+    }
