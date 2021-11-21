@@ -6,7 +6,7 @@ var newNoteButton = document.getElementById("create-note-button");
 var modeToggleButton = document.getElementById("mode-toggle-button");
 var quillEditor = document.getElementById("quill-editor");
 var drawingCanvas = document.getElementById("drawingCanvas");
-var canvas, ctx, quill, activeKey, editKey, activePage = 1;
+var canvas, ctx, quill, activeKey, editKey, activePage = 1, toggle = 0;
 
 window.onload = async () => {
 
@@ -33,7 +33,7 @@ quill = new Quill('#editor', {
   canvas = document.getElementsByClassName('drawing-board-canvas')[0];
   ctx = canvas.getContext("2d");
   renderNotes();
-
+  console.log(db.store);
   };
 
   getFormattedTime = (epoch) => {
@@ -46,6 +46,19 @@ quill = new Quill('#editor', {
   }
 
   loadNote = () => {
+    if (db.size === 0)
+    {
+      quillEditor.style.display = "none";
+      drawingCanvas.style.display = "none";
+    }
+    else
+    {
+    if (toggle === 0)
+      quillEditor.style.display = "block";
+    else
+      drawingCanvas.style.display = "block";
+    }
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (!activeKey) return;
     data = db.get(activeKey);
@@ -179,19 +192,22 @@ quill = new Quill('#editor', {
   }
 
   modeToggleButton.onclick = () => {
-      if (modeToggleButton.innerText === "Editor Mode")
+
+      if (toggle === 0)
       {
-        modeToggleButton.innerText = "Canvas Mode";
+        modeToggleButton.innerHTML = modeToggleButton.innerHTML.replace('toggle-off', 'toggle-on');
         quillEditor.style.display = "none";
-        drawingCanvas.style.display = "block";
+        if (db.size !== 0) 
+          drawingCanvas.style.display = "block";
       }
       else
       {
-        modeToggleButton.innerText = "Editor Mode";
+        modeToggleButton.innerHTML = modeToggleButton.innerHTML.replace('toggle-on', 'toggle-off');
         drawingCanvas.style.display = "none";
-        quillEditor.style.display = "block";
+        if (db.size !== 0)
+          quillEditor.style.display = "block";
       }
-  
+      toggle = 1 - toggle;
     }
 
     setInterval(updateNote, 1000);
