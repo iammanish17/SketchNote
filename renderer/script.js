@@ -79,6 +79,18 @@ quill = new Quill('#editor', {
   }
 
   updateNote = () => {
+    if (!activeKey) return;
+    key = activeKey;
+    currentData = db.get(key);
+    images = currentData.images;
+    images[activePage] = canvas.toDataURL('image/jpg', 1);
+    db.set(key,
+      {
+        'title': currentData.title,
+        'content': quill.getContents(),
+        'description': quill.getText(0, 30).replace("\n", ""),
+        'images': images
+      })
   }
 
   onSelectNote = (key) => {
