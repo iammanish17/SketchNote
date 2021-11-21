@@ -6,7 +6,7 @@ var newNoteButton = document.getElementById("create-note-button");
 var modeToggleButton = document.getElementById("mode-toggle-button");
 var quillEditor = document.getElementById("quill-editor");
 var drawingCanvas = document.getElementById("drawingCanvas");
-var canvas, ctx, quill, activeKey, activePage = 1;
+var canvas, ctx, quill, activeKey, editKey, activePage = 1;
 
 window.onload = async () => {
 
@@ -32,8 +32,7 @@ quill = new Quill('#editor', {
   });
   canvas = document.getElementsByClassName('drawing-board-canvas')[0];
   ctx = canvas.getContext("2d");
-  renderNotes('');
-  loadNote();
+  renderNotes();
 
   };
 
@@ -47,12 +46,14 @@ quill = new Quill('#editor', {
   }
 
   loadNote = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (!activeKey) return;
     data = db.get(activeKey);
     if (data.content)
-    {
       quill.setContents(data.content);
-    }
+    else
+      quill.setContents([{ insert: '\n' }]);
+      
     images = data.images;
     if (images.hasOwnProperty(activePage))
     {
@@ -64,7 +65,37 @@ quill = new Quill('#editor', {
     }
   }
 
-  renderNotes = (editKey) => {
+  updateNote = () => {
+  }
+
+  onSelectNote = (key) => {
+    if (activeKey == key) return;
+    activeKey = key;
+    if (editKey != key) editKey = "";
+    renderNotes();
+  }
+
+  onEditButtonClick = (key) => {
+    console.log("hi");
+    editKey = key;
+    renderNotes();
+  }
+
+  onTitleEdit = (key) => {
+    title = document.getElementById("note-title").value;
+    currentData = db.get(key);
+    db.set(key, 
+      {
+        'title': title,
+        'description': currentData.description,
+        'content': currentData.content,
+        'images': currentData.images
+      });
+    editKey = "";
+    renderNotes();
+  }
+
+  renderNotes = () => {
     var keys = [];
     var key;
     for (key in db.store)
@@ -80,29 +111,28 @@ quill = new Quill('#editor', {
       key = keys[i];
       title = db.get(key).title;
       description = db.get(key).description;
-      content += '<a class="list-group-item list-group-item-action py-3 lh-tight';
-      if (key == activeKey) content += ' active';
-      content += '"><div class="d-flex w-100 align-items-center justify-content-between"><div>';
+      content += `<a onclick="onSelectNote('${key}')" class="list-group-item list-group-item-action py-3 lh-tight`;
+      if (key == activeKey) content += ` active`;
+      content += `"><div class="d-flex w-100 align-items-center justify-content-between"><div>`;
 
       if (key == editKey)
       {
-      content += '<input type="text" id="edit-title-input-'+key+'"><br><br>';
-      content += '<button id=end-edit-'+key+' class="btn" onclick="onTitleEdit()">';
-      content += '<i class="fas fa-check-square"></i></button>';
+      content += `<button style="float: right;" class="btn" onclick="onTitleEdit('${key}')"><i class="fa fa-check-square"></i></button>`;
+      content += `<input id="note-title" type="text" value="${title}" maxlength="20" size="10%"><br><br>`;
       }
       else
       {
-        content += '<strong class="mb-1">' + title + '</strong>';
-        content += '<button id=begin-edit-'+key+' class="btn" onclick="onEditButtonClick()">';
-        content += '<button class="btn"><i class="fa fa-pencil"></i></button>';
+        content += `<strong class="mb-1">${title}</strong>`;
+        content += `<button class="btn" onclick="onEditButtonClick('${key}')"><i class="fa fa-pencil"></i></button>`;
       }
-      content += '</div><button class="btn" id="delete-' + key + '" onclick="onNoteDelete()">'
-      content += '<i class="fa fa-trash" style="color: red;"></i></button>';
-      content += '</div><div class="col-10 mb-1 small">' + description + '</div><div style="float: right;">';
-      content += '<small>' + getFormattedTime(key) + '</small>';
-      content += '</div></a>'
+      content += `</div><button class="btn" onclick="onNoteDelete('${key}')">`
+      content += `<i class="fa fa-trash" style="color: red;"></i></button>`;
+      content += `</div><div class="col-10 mb-1 small">${description}</div><div style="float: right;">`;
+      content += `<small>${getFormattedTime(key)}</small>`;
+      content += `</div></a>`;
     }
     noteSection.innerHTML = content;
+    loadNote();
   }
 
   newNoteButton.onclick = () => {
@@ -116,6 +146,9 @@ quill = new Quill('#editor', {
           }
       }
     );
+    if (!activeKey)
+      activeKey = noteID;
+    renderNotes();
     //const data = canvas.toDataURL('image/jpg', 1);
     //db.set({
     //  69: data
@@ -153,3 +186,5 @@ quill = new Quill('#editor', {
       }
   
     }
+
+    setInterval(updateNote, 1000);
