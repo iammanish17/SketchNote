@@ -69,7 +69,7 @@ quill = new Quill('#editor', {
   }
 
   onSelectNote = (key) => {
-    if (activeKey == key) return;
+    if (!db.has(key) || activeKey === key) return;
     activeKey = key;
     if (editKey != key) editKey = "";
     renderNotes();
@@ -92,6 +92,13 @@ quill = new Quill('#editor', {
         'images': currentData.images
       });
     editKey = "";
+    renderNotes();
+  }
+
+  onNoteDelete = (key) => {
+    db.delete(key);
+    if (activeKey == key)
+      activeKey = "";
     renderNotes();
   }
 
@@ -118,7 +125,7 @@ quill = new Quill('#editor', {
       if (key == editKey)
       {
       content += `<button style="float: right;" class="btn" onclick="onTitleEdit('${key}')"><i class="fa fa-check-square"></i></button>`;
-      content += `<input id="note-title" type="text" value="${title}" maxlength="20" size="10%"><br><br>`;
+      content += `<input id="note-title" type="text" value="${title}" maxlength="16" size="10%"><br><br>`;
       }
       else
       {
