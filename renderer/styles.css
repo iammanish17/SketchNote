@@ -1,0 +1,22 @@
+.paginate {
+    background-color: #f1f1f1;
+    color: black;
+  }
+  
+  .display {
+    background-color:black;
+    color: white;
+    pointer-events: none;
+  }
+  
+  .round {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 50%;
+  }
+
+  .paginate:hover {
+    background-color: #ddd;
+    color: black;
+  }

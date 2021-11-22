@@ -6,6 +6,8 @@ var newNoteButton = document.getElementById("create-note-button");
 var modeToggleButton = document.getElementById("mode-toggle-button");
 var quillEditor = document.getElementById("quill-editor");
 var drawingCanvas = document.getElementById("drawingCanvas");
+var pagination = document.getElementById("paginate-pages");
+var pageAnchor = document.getElementById("page-number-display");
 var canvas, ctx, quill, activeKey, editKey, activePage = 1, toggle = 0;
 
 window.onload = async () => {
@@ -45,18 +47,37 @@ quill = new Quill('#editor', {
     return month + ' ' + day + ' ' + date.getFullYear() + ', ' + hour + ':' + minute;
   }
 
+  changePage = (delta) => {
+    if (activePage + delta >= 1)
+    {
+      activePage += delta;
+      pageAnchor.innerHTML = activePage;
+      loadNote();
+    }
+  }
+
   loadNote = () => {
     if (db.size === 0)
     {
+      activePage = 1;
+      pageAnchor.innerHTML = activePage;
       quillEditor.style.display = "none";
       drawingCanvas.style.display = "none";
+      pagination.style.display = "none";
+      
     }
     else
     {
     if (toggle === 0)
+    {
       quillEditor.style.display = "block";
+      pagination.style.display = "none";
+    }
     else
+    {
       drawingCanvas.style.display = "block";
+      pagination.style.display = "inline-block";
+    }
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -96,6 +117,8 @@ quill = new Quill('#editor', {
   onSelectNote = (key) => {
     if (!db.has(key) || activeKey === key) return;
     activeKey = key;
+    activePage = 1;
+    pageAnchor.innerHTML = activePage;
     if (editKey != key) editKey = "";
     renderNotes();
   }
@@ -181,41 +204,24 @@ quill = new Quill('#editor', {
     if (!activeKey)
       activeKey = noteID;
     renderNotes();
-    //const data = canvas.toDataURL('image/jpg', 1);
-    //db.set({
-    //  69: data
-    //});
-    
-    //var image = new Image();
-    //image.onload = function() {
-    //  ctx.drawImage(image, 0, 0);
-    //};
-    //image.src = db.get('69');
-
-    return;
-
-
-      quill.setContents(db.get('69'));
-      console.log(db.get('69'));
-      console.log(quill.getContents());
-      db.set({
-        69: quill.getContents()
-      });
   }
 
   modeToggleButton.onclick = () => {
-
       if (toggle === 0)
       {
         modeToggleButton.innerHTML = modeToggleButton.innerHTML.replace('toggle-off', 'toggle-on');
         quillEditor.style.display = "none";
         if (db.size !== 0) 
+        {
           drawingCanvas.style.display = "block";
+          pagination.style.display = "inline-block";
+        }
       }
       else
       {
         modeToggleButton.innerHTML = modeToggleButton.innerHTML.replace('toggle-on', 'toggle-off');
         drawingCanvas.style.display = "none";
+        pagination.style.display = "none";
         if (db.size !== 0)
           quillEditor.style.display = "block";
       }
