@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="../ext/font-awesome.min.css">
     <link rel="stylesheet" href="../ext/bootstrap.min.css">
 		<link rel="stylesheet" href="../ext/drawingboard.min.css">
@@ -13,64 +12,53 @@
 		<script src="../ext/drawingboard.script.js"></script>
     <script src="../ext/quill.js"></script>
 
-    <title>Hello, world!</title>
+    <title>SketchNote</title>
   </head>
   <body>
-    <div class="wrap" style="display: flex; justify-content: space-between;">
+    <div class="wrap">
       <div>
-    <h1>Hello, world!</h1>
+        <button type="button" class="btn">
+          <i class="fa fa-github fa-2x" aria-hidden="true"></i>
+        </button>
     </div>
     <div>
       
-      <style>
-        .btn:focus {
-    outline: none;
-    box-shadow: none;
-  }
-      </style>
-      <div id="paginate-pages" class="pagination" style="display: none;">
+      <div id="paginate-pages" class="pagination">
         <button class="btn" onclick="changePage(-1)"><a class="paginate round">&#8249;</a></button>
         <a id="page-number-display">1</a>
         <button class="btn" onclick="changePage(1)"><a class="paginate round">&#8250;</a></button>
     </div>
-    <button id="mode-toggle-button" type="button" class="btn" style="margin-top:0px; margin-right: 5px;">
-      <span style="color: rgb(100, 128, 146);"><i class="fa fa-toggle-off fa-2x" aria-hidden="true"></i></span>
+    <button id="mode-toggle-button" type="button" class="btn">
+      <span id="toggle-color"><i class="fa fa-toggle-off fa-2x" aria-hidden="true"></i></span>
     </button>
 
   </div>
     </div>
 
 
-  <div class="display-row" style="display: flex;">
+  <div class="display-row">
 
-  <div class="left-column" style="padding: 5px; flex: 40%">
+  <div class="left-column">
 
   <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
     <a class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
       <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
       <span class="fs-5 fw-semibold">Your Notes</span>
-      <button id="create-note-button" type="button" class="btn btn-success" style="margin-left: 10px;">+</button>
+      <button id="create-note-button" onclick="onCreateNote()" type="button" class="btn btn-success">+</button>
     </a>
-    <div style="display: flex; height:75vh; flex-direction: column; overflow-y: auto;" class="list-group list-group-flush border-bottom scrollarea" id="note-section"></div>
+    <div class="list-group list-group-flush border-bottom scrollarea" id="note-section"></div>
   </div>
   </div>
 
-  <div class="right-column" style="padding: 10px; flex: 58%;">
+  <div class="right-column">
 
   <div class="test">
     <div id="drawingSection">
 
-<div id="quill-editor" style="display: block;">
-
-<style>
-  .ql-toolbar { position: absolute; top: 0;left:0;right:0;}
-  .ql-editor { 
-    font-size: 18px;
-    }
-</style>
-<div style="position:relative;margin-top:5em;border:solid 1px black;">
-  <div id="editor-container" style="height:65vh; width: 61vw; min-height:100%; overflow:auto;margin-top:3em;">
-    <div id="editor" style="min-height:100%; height:auto; min-width:100%; width:auto;">
+<div id="quill-editor">
+<div id="quill-border">
+  <div id="editor-container">
+    <div id="editor">
     </div>
   </div>
 </div>
@@ -78,7 +66,7 @@
 </div>
 
 
-    <div id = "drawingCanvas"style="height: 510px; width: 440px; display: none;"></div>
+    <div id = "drawingCanvas"></div>
     </div>
     </div>
 
@@ -87,5 +75,6 @@
   <script src="../ext/drawingboard.min.js"></script>
   <script src="./script.js"></script>
   <script src="../ext/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./styles.css">
   </body>
 </html>

@@ -9,12 +9,17 @@ function createWindow() {
             contextIsolation: false
         },
         autoHideMenuBar: true,
-        resizable: true
+        resizable: true,
+        show: false
     })
+    splash = new BrowserWindow({width: 600, height: 350, frame: false, alwaysOnTop: true, transparent: true})
+    splash.loadFile(__dirname + '/renderer/splash.html')
     win.loadFile(__dirname + '/renderer/index.html')
 
     win.addListener('ready-to-show', () => {
+        splash.destroy();
         win.show()
+        //win.removeMenu()
     })
 }
 

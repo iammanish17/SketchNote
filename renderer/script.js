@@ -2,13 +2,12 @@ var Store = require('electron-store');
 var db = new Store();
 var drawingSection = document.getElementById("drawingSection");
 var noteSection = document.getElementById("note-section");
-var newNoteButton = document.getElementById("create-note-button");
 var modeToggleButton = document.getElementById("mode-toggle-button");
 var quillEditor = document.getElementById("quill-editor");
 var drawingCanvas = document.getElementById("drawingCanvas");
 var pagination = document.getElementById("paginate-pages");
 var pageAnchor = document.getElementById("page-number-display");
-var canvas, ctx, quill, activeKey, editKey, activePage = 1, toggle = 0;
+var board, quill, activeKey, editKey, activePage = 1, toggle = 0;
 
 window.onload = async () => {
 
@@ -23,27 +22,26 @@ quill = new Quill('#editor', {
   placeholder: 'Write something here...',
   theme: 'snow'
 });
-  var customBoard2 = new DrawingBoard.Board('drawingCanvas', {
+  board = new DrawingBoard.Board('drawingCanvas', {
+    background: false,
     controls: [
       'Color',
       { Size: { type: 'dropdown' } },
       { DrawingMode: { filler: false } },
-      'Navigation'
+      'Navigation',
+      'Download'
     ],
     size: 1
   });
-  canvas = document.getElementsByClassName('drawing-board-canvas')[0];
-  ctx = canvas.getContext("2d");
   renderNotes();
-  console.log(db.store);
   };
 
   getFormattedTime = (epoch) => {
     var date = new Date(Number(epoch));
     var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][date.getMonth()];
     var day = date.getDate().toString().padStart(2, '0');
-    var hour = date.getHours();
-    var minute = date.getMinutes();
+    var hour = date.getHours().toString().padStart(2, '0');
+    var minute = date.getMinutes().toString().padStart(2, '0');
     return month + ' ' + day + ' ' + date.getFullYear() + ', ' + hour + ':' + minute;
   }
 
@@ -80,7 +78,7 @@ quill = new Quill('#editor', {
     }
     }
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    board.ctx.clearRect(0, 0, board.canvas.width, board.canvas.height);
     if (!activeKey) return;
     data = db.get(activeKey);
     if (data.content)
@@ -93,7 +91,7 @@ quill = new Quill('#editor', {
     {
       var image = new Image();
       image.onload = function() {
-      ctx.drawImage(image, 0, 0);
+      board.ctx.drawImage(image, 0, 0);
     };
     image.src = images[activePage];
     }
@@ -104,7 +102,7 @@ quill = new Quill('#editor', {
     key = activeKey;
     currentData = db.get(key);
     images = currentData.images;
-    images[activePage] = canvas.toDataURL('image/jpg', 1);
+    images[activePage] = board.canvas.toDataURL('image/jpg', 1);
     db.set(key,
       {
         'title': currentData.title,
@@ -124,7 +122,6 @@ quill = new Quill('#editor', {
   }
 
   onEditButtonClick = (key) => {
-    console.log("hi");
     editKey = key;
     renderNotes();
   }
@@ -161,12 +158,16 @@ quill = new Quill('#editor', {
     var content = "";
     if (!activeKey && keys.length > 0) 
       activeKey = keys[0]; 
+    if (!keys.length)
+    {
+      content = `<p>Looks like you have not created any notes. Click on the + button to get started.</p>`;
+    }
     for(i = 0; i < keys.length; i++)
     {
       key = keys[i];
       title = db.get(key).title;
       description = db.get(key).description;
-      content += `<a onclick="onSelectNote('${key}')" class="list-group-item list-group-item-action py-3 lh-tight`;
+      content += `<a onclick="onSelectNote('${key}')" class="list-group-item list-group-item-action list-group-item-secondary py-3 lh-tight`;
       if (key == activeKey) content += ` active`;
       content += `"><div class="d-flex w-100 align-items-center justify-content-between"><div>`;
 
@@ -190,7 +191,7 @@ quill = new Quill('#editor', {
     loadNote();
   }
 
-  newNoteButton.onclick = () => {
+  onCreateNote = () => {
     var noteID = new Date().getTime().toString();
     db.set(noteID,
       {

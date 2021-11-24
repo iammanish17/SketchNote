@@ -1,22 +1,107 @@
 .paginate {
-    background-color: #f1f1f1;
+    background-color: #7c3b3b00;
     color: black;
   }
+
+  .wrap {
+    display: flex; 
+    justify-content: space-between;
+  }
+
+  #paginate-pages {
+    display: none;
+  }
+
+  #mode-toggle-button {
+    margin-top:0px; 
+    margin-right: 5px;
+  }
+
+  .display-row {
+    display: flex;
+  }
+
+  .left-column {
+    padding: 5px; 
+    flex: 40%;
+  }
+
+  #create-note-button {
+    margin-left: 10px;
+  }
+
+  #quill-editor {
+    display: block;
+  }
+
+  #quill-border {
+    position:relative;
+    margin-top:5em;
+    border:solid 1px black;
+  }
+
+  #editor-container {
+    height:65vh; 
+    width: 61vw; 
+    min-height:100%; 
+    overflow:auto;
+    margin-top:3em;
+  }
+
+  #drawingCanvas {
+    height: 510px; 
+    width: 440px; 
+    display: none;
+  }
+
+  #editor {
+    min-height:100%; 
+    height:auto; 
+    min-width:100%; 
+    width:auto;
+  }
+
+  .right-column {
+    padding: 10px; 
+    flex: 58%;
+  }
+
+  #note-section {
+    display: flex; 
+    height:75vh; 
+    flex-direction: column; 
+    overflow-y: auto;
+  }
+
+  #toggle-color {
+    color: rgb(100, 128, 146);
+  }
   
-  .display {
+.display {
     background-color:black;
     color: white;
     pointer-events: none;
   }
   
-  .round {
+.round {
     text-decoration: none;
     display: inline-block;
     padding: 8px 16px;
     border-radius: 50%;
   }
 
-  .paginate:hover {
+.paginate:hover {
     background-color: #ddd;
     color: black;
+  }
+
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+.ql-toolbar { position: absolute; top: 0;left:0;right:0;}
+
+.ql-editor { 
+  font-size: 18px;
   }
