@@ -7,6 +7,7 @@ var quillEditor = document.getElementById("quill-editor");
 var drawingCanvas = document.getElementById("drawingCanvas");
 var pagination = document.getElementById("paginate-pages");
 var pageAnchor = document.getElementById("page-number-display");
+var wrapper;
 var board, quill, activeKey, editKey, activePage = 1, toggle = 0;
 
 window.onload = async () => {
@@ -16,7 +17,7 @@ quill = new Quill('#editor', {
     toolbar: [
       [{ header: [1, 2, 3, false] }],
       ['bold', 'italic', 'underline', 'strike'],
-      ['blockquote', 'code-block']
+      ['blockquote', 'code-block', 'image', 'video', 'formula']
     ]
   },
   placeholder: 'Write something here...',
@@ -33,8 +34,27 @@ quill = new Quill('#editor', {
     ],
     size: 1
   });
+  wrapper  = document.getElementsByClassName("drawing-board-canvas-wrapper")[0];
   renderNotes();
   };
+
+  window.addEventListener('resize', function(event) {
+    var img = new Image();
+    img.src = board.canvas.toDataURL('image/jpg', 1);
+    var width = Math.floor(window.innerWidth * 0.55);
+    var height = Math.floor(window.innerHeight * 0.825);
+    board.canvas.width  = width;
+    board.canvas.style.width = width + 'px';
+    wrapper.style.width = width + 'px';
+    board.canvas.height = height;;
+    board.canvas.style.height = height + 'px';
+    wrapper.style.height = height + 'px';
+    board.ctx.lineCap = 'round';
+    board.ctx.lineJoin = 'round';
+    img.onload = function() {
+    board.ctx.drawImage(img, 0, 0, board.canvas.width, board.canvas.height);
+    };
+}, true);
 
   getFormattedTime = (epoch) => {
     var date = new Date(Number(epoch));
@@ -91,7 +111,7 @@ quill = new Quill('#editor', {
     {
       var image = new Image();
       image.onload = function() {
-      board.ctx.drawImage(image, 0, 0);
+      board.ctx.drawImage(image, 0, 0, board.canvas.width, board.canvas.height);
     };
     image.src = images[activePage];
     }

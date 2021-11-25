@@ -12,7 +12,7 @@ function createWindow() {
         resizable: true,
         show: false
     })
-    splash = new BrowserWindow({width: 600, height: 350, frame: false, alwaysOnTop: true, transparent: true})
+    splash = new BrowserWindow({width: 600, height: 350, frame: false, transparent: true, alwaysOnTop: true})
     splash.loadFile(__dirname + '/renderer/splash.html')
     win.loadFile(__dirname + '/renderer/index.html')
 
