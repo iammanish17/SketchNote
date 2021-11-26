@@ -7,6 +7,7 @@ var quillEditor = document.getElementById("quill-editor");
 var drawingCanvas = document.getElementById("drawingCanvas");
 var pagination = document.getElementById("paginate-pages");
 var pageAnchor = document.getElementById("page-number-display");
+var downloadButton = document.getElementById("download-button");
 var wrapper;
 var board, quill, activeKey, editKey, activePage = 1, toggle = 0;
 
@@ -32,11 +33,15 @@ quill = new Quill('#editor', {
       'Navigation',
       'Download'
     ],
-    size: 1
+    size: 1,
+    droppable: true,
+    stretchImg: true
   });
   wrapper  = document.getElementsByClassName("drawing-board-canvas-wrapper")[0];
   renderNotes();
   };
+
+
 
   window.addEventListener('resize', function(event) {
     var img = new Image();
@@ -82,6 +87,7 @@ quill = new Quill('#editor', {
       quillEditor.style.display = "none";
       drawingCanvas.style.display = "none";
       pagination.style.display = "none";
+      downloadButton.style.display = "none";
       
     }
     else
@@ -89,6 +95,7 @@ quill = new Quill('#editor', {
     if (toggle === 0)
     {
       quillEditor.style.display = "block";
+      downloadButton.style.display = "block";
       pagination.style.display = "none";
     }
     else
@@ -232,6 +239,7 @@ quill = new Quill('#editor', {
       {
         modeToggleButton.innerHTML = modeToggleButton.innerHTML.replace('toggle-off', 'toggle-on');
         quillEditor.style.display = "none";
+        downloadButton.style.display = "none";
         if (db.size !== 0) 
         {
           drawingCanvas.style.display = "block";
@@ -244,9 +252,26 @@ quill = new Quill('#editor', {
         drawingCanvas.style.display = "none";
         pagination.style.display = "none";
         if (db.size !== 0)
+        {
           quillEditor.style.display = "block";
+          downloadButton.style.display = "block";
+        }
       }
       toggle = 1 - toggle;
+    }
+
+    downloadButton.onclick = () => {
+      let mywindow = window.open('', 'PRINT', 'height=650,width=900,top=100,left=150');
+      mywindow.document.write(`<html><head><title>${title}</title>`);
+      mywindow.document.write(`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.css">`);
+      mywindow.document.write(`<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.js"></script>`);
+    mywindow.document.write('</head><body >');
+    mywindow.document.write(quill.root.innerHTML);
+    mywindow.document.write('</body></html>');
+  
+    mywindow.document.close();
+    mywindow.focus();
+      
     }
 
     setInterval(updateNote, 1000);
