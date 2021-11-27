@@ -1,133 +1,133 @@
 .paginate {
-    background-color: #7c3b3b00;
-    color: black;
-  }
+  background-color: #7c3b3b00;
+  color: black;
+}
 
-  .wrap {
-    display: flex; 
-    justify-content: space-between;
-  }
+.wrap {
+  display: flex; 
+  justify-content: space-between;
+}
 
-  #paginate-pages {
-    display: none;
-  }
+#paginate-pages {
+  display: none;
+}
 
-  #mode-toggle-button {
-    margin-top:0px; 
-    margin-right: 5px;
-  }
+#mode-toggle-button {
+  margin-top:0px; 
+  margin-right: 5px;
+}
 
-  .display-row {
-    display: flex;
-  }
+.display-row {
+  display: flex;
+}
 
-  .left-column {
-    padding: 5px; 
-    flex: 40%;
-  }
+.left-column {
+  padding: 5px; 
+  flex: 40%;
+}
 
-  #create-note-button {
-    margin-left: 10px;
-  }
+#create-note-button {
+  margin-left: 10px;
+}
 
-  #quill-editor {
-    display: block;
-  }
+#quill-editor {
+  display: block;
+}
 
-  #quill-border {
-    position:relative;
-    margin-top:5em;
-    border:solid 1px black;
-  }
+#quill-border {
+  position:relative;
+  margin-top:5em;
+  border:solid 1px black;
+}
 
-  #editor-container {
-    height:65vh; 
-    width: 61vw; 
-    min-height:100%; 
-    overflow:auto;
-    margin-top:3em;
-  }
+#editor-container {
+  height:65vh; 
+  width: 61vw; 
+  min-height:100%; 
+  overflow:auto;
+  margin-top:3em;
+}
 
-  #drawingCanvas {
-    height: 510px; 
-    width: 440px; 
-    display: none;
-  }
+#drawingCanvas {
+  height: 510px; 
+  width: 440px; 
+  display: none;
+}
 
-  #editor {
-    min-height:100%; 
-    height:auto; 
-    min-width:100%; 
-    width:auto;
-  }
+#editor {
+  min-height:100%; 
+  height:auto; 
+  min-width:100%; 
+  width:auto;
+}
 
-  .right-column {
-    padding: 10px; 
-    flex: 58%;
-  }
+.right-column {
+  padding: 10px; 
+  flex: 58%;
+}
 
-  #note-section {
-    display: flex; 
-    height:75vh; 
-    flex-direction: column; 
-    overflow-y: auto;
-  }
+#note-section {
+  display: flex; 
+  height:75vh; 
+  flex-direction: column; 
+  overflow-y: auto;
+}
 
-  #toggle-color {
-    color: rgb(100, 128, 146);
-  }
-  
+#toggle-color {
+  color: rgb(100, 128, 146);
+}
+
 .display {
-    background-color:black;
-    color: white;
-    pointer-events: none;
-  }
-  
+  background-color:black;
+  color: white;
+  pointer-events: none;
+}
+
 .round {
-    text-decoration: none;
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 50%;
-  }
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 50%;
+}
 
 .paginate:hover {
-    background-color: #ddd;
-    color: black;
-  }
+  background-color: #ddd;
+  color: black;
+}
 
 .btn:focus {
-    outline: none;
-    box-shadow: none;
-  }
+  outline: none;
+  box-shadow: none;
+}
 
 .ql-toolbar { position: absolute; top: 0;left:0;right:0;}
 
 .ql-editor { 
-  font-size: 18px;
-  }
+font-size: 18px;
+}
 
 .ql-tooltip {
-  margin-left: 210px;
+margin-left: 210px;
 }
 
 input {
-  position: relative; z-index: 4000;
+position: relative; z-index: 4000;
 }
 
 canvas, img {
-  image-rendering: optimizeQuality;
-    image-rendering: -moz-crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: optimize-contrast;
-    -ms-interpolation-mode: nearest-neighbor;
+image-rendering: optimizeQuality;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimize-contrast;
+  -ms-interpolation-mode: nearest-neighbor;
 }
 
 #download-color {
-  color: rgb(22, 72, 105);
+color: rgb(22, 72, 105);
 }
 
 html, body {
-  width:  100%;
-  height: 100%;
-  margin: 0;
+width:  100%;
+height: 100%;
+margin: 0;
 }

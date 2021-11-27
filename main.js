@@ -1,9 +1,10 @@
-const {app, BrowserWindow} = require('electron')
+const { app, BrowserWindow } = require('electron')
 
 function createWindow() {
     var win = new BrowserWindow({
         width: 800,
         height: 610,
+        icon: __dirname + '/icon.png',
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false
@@ -12,24 +13,23 @@ function createWindow() {
         resizable: true,
         show: false
     })
-    splash = new BrowserWindow({width: 600, height: 350, frame: false, transparent: true, alwaysOnTop: true})
+    splash = new BrowserWindow({ width: 600, height: 350, frame: false, transparent: true, alwaysOnTop: true, icon: __dirname + '/icon.png' })
     splash.loadFile(__dirname + '/renderer/splash.html')
     win.loadFile(__dirname + '/renderer/index.html')
 
     win.addListener('ready-to-show', () => {
         splash.destroy();
         win.show()
-        //win.removeMenu()
+        win.removeMenu()
     })
 }
 
-app.whenReady().then(() => {  
+app.whenReady().then(() => {
     createWindow()
-    app.on('activate', () => {    
-        if (BrowserWindow.getAllWindows().length === 0) 
-        {      
-            createWindow()    
-        }  
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) {
+            createWindow()
+        }
     })
 })
 
