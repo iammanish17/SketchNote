@@ -10,6 +10,8 @@ a note taking and drawing app with a rich text editor supporting LaTeX and embed
 electron-packager is used to package and build the app.
 
 **Linux:** Run `npm run package-linux` to create the release build. Then run the `SketchNote` file in the release folder to launch the app.
+
+
 **Windows/macOS:** Use electron-packager in a similar way to create the build.
 
 # Features
