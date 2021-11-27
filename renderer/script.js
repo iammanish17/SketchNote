@@ -261,17 +261,29 @@ quill = new Quill('#editor', {
     }
 
     downloadButton.onclick = () => {
-      let mywindow = window.open('', 'PRINT', 'height=650,width=900,top=100,left=150');
-      mywindow.document.write(`<html><head><title>${title}</title>`);
-      mywindow.document.write(`<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.css">`);
-      mywindow.document.write(`<script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.js"></script>`);
-    mywindow.document.write('</head><body >');
-    mywindow.document.write(quill.root.innerHTML);
-    mywindow.document.write('</body></html>');
-  
-    mywindow.document.close();
-    mywindow.focus();
-      
+      console.log("hello");
+      var content = `
+      <html>
+      <head>
+      <title>${db.get(activeKey).title}</title>
+      <h2>${db.get(activeKey).title}</h2>
+      <p>Created on ${getFormattedTime(activeKey)}</p>
+      <hr>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.css">
+      <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.js"></script>
+      </head>
+      <body>
+      ${quill.root.innerHTML}
+      </body>
+      </html>
+      `;
+      var blob = new Blob([content], {type: "text/html"});
+      var doc = document.createElement("a");
+      doc.href = URL.createObjectURL(blob);
+      doc.download = activeKey + ".html";
+      doc.hidden = true;
+      document.body.appendChild(doc);
+      doc.click();
     }
 
     setInterval(updateNote, 1000);
