@@ -21,3 +21,10 @@ electron-packager is used to package and build the app.
 - Save the drawings as an image file.
 - Notes are auto-saved every second.
 
+# Dependencies
+- [quill](https://github.com/quilljs/quill)
+- [drawingboard.js](https://github.com/Leimi/drawingboard.js/)
+- [KaTeX](https://github.com/KaTeX/KaTeX)
+- Bootstrap
+---
+![](https://github.com/iammanish17/SketchNote/blob/main/ss.gif?raw=true)
