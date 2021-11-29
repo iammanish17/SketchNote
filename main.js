@@ -1,7 +1,20 @@
 const { app, BrowserWindow } = require('electron')
+let win = null;
+const lock = app.requestSingleInstanceLock();
+    
+if (!lock) {
+  app.quit()
+} else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    if (win) {
+      if (win.isMinimized()) win.restore()
+      win.focus()
+    }
+  })
+}
 
 function createWindow() {
-    var win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 800,
         height: 610,
         icon: __dirname + '/icon.png',
