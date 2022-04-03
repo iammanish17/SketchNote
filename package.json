@@ -24,7 +24,7 @@
     "quill": "^1.3.6"
   },
   "devDependencies": {
-    "electron": "^16.0.2",
+    "electron": "^16.0.6",
     "electron-packager": "^15.4.0"
   }
 }
